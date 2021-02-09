@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "HClonXoDPGJ9v9gN5aA4MevbFM8dqb2XGulLsfNQcybwt3I0epp3sNwt0U6O/b4LAtUJE8BgDoiuMwJVlGMjEA==",
+  "success": true,
+  "projectFilePath": "/home/valley/projects/fsharp/fsfetch/src/app/app.fsproj",
+  "expectedPackageFiles": [
+    "/home/valley/.nuget/packages/fsharp.core/5.0.0/fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
