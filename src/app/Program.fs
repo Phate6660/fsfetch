@@ -27,8 +27,8 @@ type Info =
 let distro   = Info.Distro
 let hostname = Functions.Read "/etc/hostname"
 let kernel   = Functions.Read "/proc/sys/kernel/osrelease"
-let shell    = Functions.Env "SHELL"
-let user     = Functions.Env "USER"
+let shell    = Info.Env "SHELL"
+let user     = Info.Env "USER"
 
 // Print output
 printfn "Distro:   %s\nHostname: %s\nKernel:   %s\nShell:    %s\nUser:     %s" distro hostname kernel shell user
