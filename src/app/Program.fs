@@ -23,12 +23,26 @@ type Info =
     static member Env(var: string) =
         System.Environment.GetEnvironmentVariable(var).TrimEnd('\r', '\n')
 
+    static member Music =
+        // Currently uses rsmpc for music info until I find a find an mpd module for F# or something
+        let n=
+            new System.Diagnostics.Process(
+                StartInfo=System.Diagnostics.ProcessStartInfo(
+                    RedirectStandardOutput=true,RedirectStandardError=true,UseShellExecute=false, FileName= @"rsmpc",Arguments="current"
+                )
+            )
+        n.Start() |> ignore // |>ignore used to silence dotnet warning
+        let status = ((n.StandardOutput).ReadToEnd()).TrimEnd('\r', '\n') // Assign the value of n's standard output to status
+        n.Close()
+        status // Return status
+
 // Gather info and store into variables
 let distro   = Info.Distro
 let hostname = Functions.Read "/etc/hostname"
 let kernel   = Functions.Read "/proc/sys/kernel/osrelease"
 let shell    = Info.Env "SHELL"
 let user     = Info.Env "USER"
+let music    = Info.Music
 
 // Print output
-printfn "Distro:   %s\nHostname: %s\nKernel:   %s\nShell:    %s\nUser:     %s" distro hostname kernel shell user
+printfn "Distro:   %s\nHostname: %s\nKernel:   %s\nShell:    %s\nUser:     %s\nMusic:    %s" distro hostname kernel shell user music

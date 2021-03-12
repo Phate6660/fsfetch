@@ -12,4 +12,5 @@ Hostname: gentoo
 Kernel:   5.10.10-ck-VALLEY
 Shell:    /bin/bash
 User:     valley
+Music:    Nothingface - Goldtooth
 ```
