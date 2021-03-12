@@ -58,4 +58,12 @@ let user     = Info.Env "USER"
 let music    = Info.Music
 
 // Print output
-printfn "CPU:      %s\nDistro:   %s\nHostname: %s\nKernel:   %s\nShell:    %s\nUser:     %s\nMusic:    %s" cpu distro hostname kernel shell user music
+printfn 
+  "CPU:      %s
+Distro:   %s
+Hostname: %s
+Kernel:   %s
+Shell:    %s
+User:     %s
+Music:    %s" 
+  cpu distro hostname kernel shell user music
