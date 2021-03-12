@@ -11,13 +11,25 @@ type Functions =
     static member Read(file: string) =
         File.ReadAllText(file).TrimEnd('\r', '\n')
 
+    static member Split(line: string) (delimiter: string) (element: int) =
+        let line_seq = line.Split delimiter // Split line into sequence using the the delimiter
+        line_seq |> Seq.cast<string> |> Seq.item(element) // Get the specified element
+
+    static member Trim(line: string) (rem: char) =
+        line.TrimStart(rem).TrimEnd(rem)
+
 // Actual information gathering functions contained in a class
 type Info =
+    static member CPU =
+        let line = Functions.GetLine "/proc/cpuinfo" 4 // 5th line
+        let line = Functions.Split line ":" 1
+        line.TrimStart(' ')
+
     /// This function will output the distro by parsing `/etc/os-release`
     static member Distro =
-        let line = Functions.GetLine "/etc/os-release" 2
-        let line_seq = line.Split "=" // Split line into sequence with '=' as the delimiter
-        line_seq |> Seq.cast<string> |> Seq.item(1) // Get the second element
+        let line = Functions.GetLine "/etc/os-release" 2 // Third line
+        let line = Functions.Split line "=" 1 // Split line based on "=", grab the second element
+        Functions.Trim line '"'
 
     /// This function will return the contents of an environmental variable and trim any newlines from it
     static member Env(var: string) =
@@ -37,6 +49,7 @@ type Info =
         status // Return status
 
 // Gather info and store into variables
+let cpu      = Info.CPU
 let distro   = Info.Distro
 let hostname = Functions.Read "/etc/hostname"
 let kernel   = Functions.Read "/proc/sys/kernel/osrelease"
@@ -45,4 +58,4 @@ let user     = Info.Env "USER"
 let music    = Info.Music
 
 // Print output
-printfn "Distro:   %s\nHostname: %s\nKernel:   %s\nShell:    %s\nUser:     %s\nMusic:    %s" distro hostname kernel shell user music
+printfn "CPU:      %s\nDistro:   %s\nHostname: %s\nKernel:   %s\nShell:    %s\nUser:     %s\nMusic:    %s" cpu distro hostname kernel shell user music
